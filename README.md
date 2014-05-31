@@ -39,6 +39,7 @@ main (void) {
   printf("%s\n", dec); // YnJpYW4gdGhlIG1vbmtleSBhbmQgYnJhZGxleSB0aGUga2lua2Fqb3UgYXJlIGZyaWVuZHM=
   return 0;
 }
+```
 
 ## api
 
