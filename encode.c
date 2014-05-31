@@ -1,4 +1,10 @@
 
+/**
+ * `encode.c' - b64
+ *
+ * copyright (c) 2014 joseph werle
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "b64.h"

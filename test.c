@@ -1,4 +1,10 @@
 
+/**
+ * `test.c' - b64
+ *
+ * copyright (c) 2014 joseph werle
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
