@@ -10,8 +10,14 @@
 #include <ctype.h>
 #include "b64.h"
 
+
 unsigned char *
 b64_decode (const char *src, size_t len) {
+  return b64_decode_ex(src, len, NULL);
+}
+
+unsigned char *
+b64_decode_ex (const char *src, size_t len, size_t *decsize) {
   int i = 0;
   int j = 0;
   int l = 0;
@@ -93,6 +99,9 @@ b64_decode (const char *src, size_t len) {
   }
 
   dec[size] = '\0';
-
+  
+  // Return back the size of decoded string if demanded.
+  if (decsize != NULL) *decsize = size;
+  
   return dec;
 }
