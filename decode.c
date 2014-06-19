@@ -98,6 +98,8 @@ b64_decode_ex (const char *src, size_t len, size_t *decsize) {
     }
   }
 
+  // Make sure we have enough space to add '\0' character at end.
+  dec = (unsigned char *) realloc(dec, size);
   dec[size] = '\0';
   
   // Return back the size of decoded string if demanded.
