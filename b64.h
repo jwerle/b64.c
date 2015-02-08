@@ -23,6 +23,10 @@ static const char b64_table[] = {
   '4', '5', '6', '7', '8', '9', '+', '/'
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Encode `unsigned char *' source with `size_t' size.
  * Returns a `char *' base64 encoded string.
@@ -45,6 +49,8 @@ b64_decode (const char *, size_t);
 unsigned char *
 b64_decode_ex (const char *, size_t, size_t *);
 
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif
