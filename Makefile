@@ -1,17 +1,14 @@
 
-SRC = $(filter-out test.c, $(wildcard *.c))
-CFLAGS += -std=c99 -Wall
-OBJS = $(SRC:.c=.o)
+CFLAGS = -std=c99 -Wall
+TEST_CFLAGS = -Ideps
 
-b64: clean test
+default: test
+	./$<
 
-$(OBJS):
-	$(CC) $(@:.o=.c) -c -o $(@)
-
-test: $(OBJS)
-	$(CC) test.c deps/ok/ok.c $(SRC) -Ideps $(CFLAGS) -o test
-	./test
+test: CFLAGS+=$(TEST_CFLAGS)
+test: test.o encode.o decode.o deps/ok/ok.o
 
 clean:
-	rm -f test
-	rm -f $(OBJS)
+	rm -f *.o test deps/ok/ok.o
+
+.PHONY: default clean
