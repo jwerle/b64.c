@@ -63,14 +63,14 @@ b64_encode (const unsigned char *src, size_t len) {
 
     // perform same write to `enc` with new allocation
     for (j = 0; (j < i + 1); ++j) {
-      enc = (char *) realloc(enc, size);
+      enc = (char *) realloc(enc, size + 1);
       enc[size++] = b64_table[buf[j]];
     }
 
     // while there is still a remainder
     // append `=' to `enc'
     while ((i++ < 3)) {
-      enc = (char *) realloc(enc, size);
+      enc = (char *) realloc(enc, size + 1);
       enc[size++] = '=';
     }
   }
