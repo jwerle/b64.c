@@ -36,7 +36,7 @@ main (void) {
 
   char *dec = b64_decode(enc, strlen(enc));
 
-  printf("%s\n", dec); // YnJpYW4gdGhlIG1vbmtleSBhbmQgYnJhZGxleSB0aGUga2lua2Fqb3UgYXJlIGZyaWVuZHM=
+  printf("%s\n", dec); // brian the monkey and bradley the kinkajou are friends
   return 0;
 }
 ```
