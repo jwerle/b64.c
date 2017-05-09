@@ -10,5 +10,4 @@ script:
   - valgrind --leak-check=full --error-exitcode=1 ./test
   - make clean
   - make test USE_CUSTOM_MALLOC=true
-  - make test
   - valgrind --leak-check=full --error-exitcode=1 ./test
