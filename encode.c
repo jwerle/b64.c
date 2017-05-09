@@ -9,6 +9,14 @@
 #include <stdlib.h>
 #include "b64.h"
 
+#ifdef b64_USE_CUSTOM_MALLOC
+extern void* b64_malloc(size_t);
+#endif
+
+#ifdef b64_USE_CUSTOM_REALLOC
+extern void* b64_realloc(void*, size_t);
+#endif
+
 char *
 b64_encode (const unsigned char *src, size_t len) {
   int i = 0;
