@@ -9,6 +9,18 @@
 #define B64_H 1
 
 /**
+ *  Memory allocation functions to use. You can define b64_malloc and
+ * b64_realloc to custom functions if you want.
+ */
+
+#ifndef b64_malloc
+#  define b64_malloc(ptr) malloc(ptr)
+#endif
+#ifndef b64_realloc
+#  define b64_realloc(ptr, size) realloc(ptr, size)
+#endif
+
+/**
  * Base64 index table.
  */
 
