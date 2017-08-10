@@ -12,7 +12,7 @@ $ clib install littlstar/b64.c
 ## usage
 
 ```c
-#include <b64/b64.h
+#include <b64/b64.h>
 ```
 
 or
@@ -25,6 +25,7 @@ or
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "b64.h"
 
 int
@@ -36,7 +37,9 @@ main (void) {
 
   char *dec = b64_decode(enc, strlen(enc));
 
-  printf("%s\n", dec); // YnJpYW4gdGhlIG1vbmtleSBhbmQgYnJhZGxleSB0aGUga2lua2Fqb3UgYXJlIGZyaWVuZHM=
+  printf("%s\n", dec); // brian the monkey and bradley the kinkajou are friends
+  free(enc);
+  free(dec);
   return 0;
 }
 ```

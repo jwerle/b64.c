@@ -14,14 +14,10 @@
  */
 
 #ifndef b64_malloc
-#  define b64_malloc(size) malloc(size)
-#else
-#  define b64_USE_CUSTOM_MALLOC
+#  define b64_malloc(ptr) malloc(ptr)
 #endif
 #ifndef b64_realloc
 #  define b64_realloc(ptr, size) realloc(ptr, size)
-#else
-#  define b64_USE_CUSTOM_REALLOC
 #endif
 
 /**
