@@ -23,6 +23,18 @@
     ok(tmp);                                                         \
 })
 
+void* custom_malloc(size_t size){
+  if (size == 0){
+    /* On some systems malloc doesn't allow for size = 0 */
+    return NULL;
+  }
+  return malloc(size);
+}
+
+void* custom_realloc(void* ptr, size_t size){
+  return realloc(ptr, size);
+}
+
 int
 main (void) {
 
