@@ -55,7 +55,7 @@ unsigned char *
 b64_decode (const char *, size_t);
 
 /**
- * Dencode `char *' source with `size_t' size.
+ * Decode `char *' source with `size_t' size.
  * Returns a `unsigned char *' base64 decoded string + size of decoded string.
  */
 unsigned char *
