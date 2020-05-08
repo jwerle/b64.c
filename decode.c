@@ -34,7 +34,7 @@ b64_decode_ex (const char *src, size_t len, size_t *decsize) {
   unsigned char tmp[4];
 
   // alloc
-  dec = (unsigned char *) b64_malloc(1);
+  dec = (unsigned char *) b64_buf_malloc();
   if (NULL == dec) { return NULL; }
 
   // parse until end of source
@@ -65,7 +65,7 @@ b64_decode_ex (const char *src, size_t len, size_t *decsize) {
       buf[2] = ((tmp[2] & 0x3) << 6) + tmp[3];
 
       // write decoded buffer to `dec'
-      dec = (unsigned char *) b64_realloc(dec, size + 3);
+      dec = (unsigned char *) b64_buf_realloc(dec, size + 3);
       if (dec != NULL){
         for (i = 0; i < 3; ++i) {
           dec[size++] = buf[i];
@@ -103,7 +103,7 @@ b64_decode_ex (const char *src, size_t len, size_t *decsize) {
     buf[2] = ((tmp[2] & 0x3) << 6) + tmp[3];
 
     // write remainer decoded buffer to `dec'
-    dec = (unsigned char *) b64_realloc(dec, size + (i - 1));
+    dec = (unsigned char *)b64_buf_realloc(dec, size + (i - 1));
     if (dec != NULL){
       for (j = 0; (j < i - 1); ++j) {
         dec[size++] = buf[j];
@@ -114,7 +114,7 @@ b64_decode_ex (const char *src, size_t len, size_t *decsize) {
   }
 
   // Make sure we have enough space to add '\0' character at end.
-  dec = (unsigned char *) b64_realloc(dec, size + 1);
+  dec = (unsigned char *)b64_buf_realloc(dec, size + 1);
   if (dec != NULL){
     dec[size] = '\0';
   } else {
