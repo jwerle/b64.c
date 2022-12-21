@@ -10,7 +10,7 @@ extern void* b64_malloc(size_t);
 extern void* b64_realloc(void*, size_t);
 #endif
 
-int b64_buf_malloc(buffer_t * buf)
+int b64_buf_malloc(b64_buffer_t * buf)
 {
 	buf->ptr = b64_malloc(B64_BUFFER_SIZE);
 	if(!buf->ptr) return -1;
@@ -20,7 +20,7 @@ int b64_buf_malloc(buffer_t * buf)
 	return 0;
 }
 
-int b64_buf_realloc(buffer_t* buf, size_t size)
+int b64_buf_realloc(b64_buffer_t* buf, size_t size)
 {
 	if (size > buf->bufc * B64_BUFFER_SIZE)
 	{

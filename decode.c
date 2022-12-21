@@ -29,7 +29,7 @@ b64_decode_ex (const char *src, size_t len, size_t *decsize) {
   int j = 0;
   int l = 0;
   size_t size = 0;
-  buffer_t decbuf;
+  b64_buffer_t decbuf;
   unsigned char buf[3];
   unsigned char tmp[4];
 

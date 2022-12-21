@@ -21,7 +21,7 @@ char *
 b64_encode (const unsigned char *src, size_t len) {
   int i = 0;
   int j = 0;
-  buffer_t encbuf;
+  b64_buffer_t encbuf;
   size_t size = 0;
   unsigned char buf[4];
   unsigned char tmp[3];
