@@ -21,14 +21,13 @@ char *
 b64_encode (const unsigned char *src, size_t len) {
   int i = 0;
   int j = 0;
-  char *enc = NULL;
+  b64_buffer_t encbuf;
   size_t size = 0;
   unsigned char buf[4];
   unsigned char tmp[3];
 
   // alloc
-  enc = (char *) b64_buf_malloc();
-  if (NULL == enc) { return NULL; }
+  if(b64_buf_malloc(&encbuf) == -1) { return NULL; }
 
   // parse until end of source
   while (len--) {
@@ -45,10 +44,11 @@ b64_encode (const unsigned char *src, size_t len) {
       // allocate 4 new byts for `enc` and
       // then translate each encoded buffer
       // part by index from the base 64 index table
-      // into `enc' unsigned char array
-      enc = (char *) b64_buf_realloc(enc, size + 4);
+      // into `encbuf.ptr' unsigned char array
+      if (b64_buf_realloc(&encbuf, size + 4) == -1) return NULL;
+
       for (i = 0; i < 4; ++i) {
-        enc[size++] = b64_table[buf[i]];
+        encbuf.ptr[size++] = b64_table[buf[i]];
       }
 
       // reset index
@@ -69,23 +69,25 @@ b64_encode (const unsigned char *src, size_t len) {
     buf[2] = ((tmp[1] & 0x0f) << 2) + ((tmp[2] & 0xc0) >> 6);
     buf[3] = tmp[2] & 0x3f;
 
-    // perform same write to `enc` with new allocation
+    // perform same write to `encbuf->ptr` with new allocation
     for (j = 0; (j < i + 1); ++j) {
-      enc = (char *) b64_buf_realloc(enc, size + 1);
-      enc[size++] = b64_table[buf[j]];
+      if (b64_buf_realloc(&encbuf, size + 1) == -1) return NULL;
+
+      encbuf.ptr[size++] = b64_table[buf[j]];
     }
 
     // while there is still a remainder
-    // append `=' to `enc'
+    // append `=' to `encbuf.ptr'
     while ((i++ < 3)) {
-      enc = (char *) b64_buf_realloc(enc, size + 1);
-      enc[size++] = '=';
+      if (b64_buf_realloc(&encbuf, size + 1) == -1) return NULL;
+
+      encbuf.ptr[size++] = '=';
     }
   }
 
   // Make sure we have enough space to add '\0' character at end.
-  enc = (char *) b64_buf_realloc(enc, size + 1);
-  enc[size] = '\0';
+  if (b64_buf_realloc(&encbuf, size + 1) == -1) return NULL;
+  encbuf.ptr[size] = '\0';
 
-  return enc;
+  return encbuf.ptr;
 }

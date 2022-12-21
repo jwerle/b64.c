@@ -10,25 +10,24 @@ extern void* b64_malloc(size_t);
 extern void* b64_realloc(void*, size_t);
 #endif
 
-// The number of buffers we need
-int bufc = 0;
-
-char* b64_buf_malloc()
+int b64_buf_malloc(b64_buffer_t * buf)
 {
-	char* buf = b64_malloc(B64_BUFFER_SIZE);
-	bufc = 1;
-	return buf;
+	buf->ptr = b64_malloc(B64_BUFFER_SIZE);
+	if(!buf->ptr) return -1;
+
+	buf->bufc = 1;
+
+	return 0;
 }
 
-char* b64_buf_realloc(unsigned char* ptr, size_t size)
+int b64_buf_realloc(b64_buffer_t* buf, size_t size)
 {
-	if (size > bufc * B64_BUFFER_SIZE)
+	if (size > buf->bufc * B64_BUFFER_SIZE)
 	{
-		while (size > bufc * B64_BUFFER_SIZE) bufc++;
-		char* buf = b64_realloc(ptr, B64_BUFFER_SIZE * bufc);
-		if (!buf) return NULL;
-		return buf;
+		while (size > buf->bufc * B64_BUFFER_SIZE) buf->bufc++;
+		buf->ptr = b64_realloc(buf->ptr, B64_BUFFER_SIZE * buf->bufc);
+		if (!buf->ptr) return -1;
 	}
 
-	return ptr;
+	return 0;
 }

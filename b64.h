@@ -8,6 +8,11 @@
 #ifndef B64_H
 #define B64_H 1
 
+typedef struct b64_buffer {
+    char * ptr;
+    int bufc;
+} b64_buffer_t;
+
 /**
  *  Memory allocation functions to use. You can define b64_malloc and
  * b64_realloc to custom functions if you want.
@@ -24,12 +29,12 @@
 #define B64_BUFFER_SIZE		(1024 * 64) // 64K
 
  // Start buffered memory
-char* b64_buf_malloc();
+int b64_buf_malloc(b64_buffer_t * buffer);
 
 // Update memory size. Returns the same pointer if we
 // have enough space in the buffer. Otherwise, we add
 // additional buffers.
-char* b64_buf_realloc(unsigned char* ptr, size_t size);
+int b64_buf_realloc(b64_buffer_t * buffer, size_t size);
 
 /**
  * Base64 index table.

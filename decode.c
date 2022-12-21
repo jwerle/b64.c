@@ -29,13 +29,12 @@ b64_decode_ex (const char *src, size_t len, size_t *decsize) {
   int j = 0;
   int l = 0;
   size_t size = 0;
-  unsigned char *dec = NULL;
+  b64_buffer_t decbuf;
   unsigned char buf[3];
   unsigned char tmp[4];
 
   // alloc
-  dec = (unsigned char *) b64_buf_malloc();
-  if (NULL == dec) { return NULL; }
+  if (b64_buf_malloc(&decbuf) == -1) { return NULL; }
 
   // parse until end of source
   while (len--) {
@@ -64,14 +63,10 @@ b64_decode_ex (const char *src, size_t len, size_t *decsize) {
       buf[1] = ((tmp[1] & 0xf) << 4) + ((tmp[2] & 0x3c) >> 2);
       buf[2] = ((tmp[2] & 0x3) << 6) + tmp[3];
 
-      // write decoded buffer to `dec'
-      dec = (unsigned char *) b64_buf_realloc(dec, size + 3);
-      if (dec != NULL){
-        for (i = 0; i < 3; ++i) {
-          dec[size++] = buf[i];
-        }
-      } else {
-        return NULL;
+      // write decoded buffer to `decbuf.ptr'
+      if (b64_buf_realloc(&decbuf, size + 3) == -1)  return NULL;
+      for (i = 0; i < 3; ++i) {
+        ((unsigned char*)decbuf.ptr)[size++] = buf[i];
       }
 
       // reset
@@ -102,29 +97,21 @@ b64_decode_ex (const char *src, size_t len, size_t *decsize) {
     buf[1] = ((tmp[1] & 0xf) << 4) + ((tmp[2] & 0x3c) >> 2);
     buf[2] = ((tmp[2] & 0x3) << 6) + tmp[3];
 
-    // write remainer decoded buffer to `dec'
-    dec = (unsigned char *)b64_buf_realloc(dec, size + (i - 1));
-    if (dec != NULL){
-      for (j = 0; (j < i - 1); ++j) {
-        dec[size++] = buf[j];
-      }
-    } else {
-      return NULL;
+    // write remainer decoded buffer to `decbuf.ptr'
+    if (b64_buf_realloc(&decbuf, size + (i - 1)) == -1)  return NULL;
+    for (j = 0; (j < i - 1); ++j) {
+      ((unsigned char*)decbuf.ptr)[size++] = buf[j];
     }
   }
 
   // Make sure we have enough space to add '\0' character at end.
-  dec = (unsigned char *)b64_buf_realloc(dec, size + 1);
-  if (dec != NULL){
-    dec[size] = '\0';
-  } else {
-    return NULL;
-  }
+  if (b64_buf_realloc(&decbuf, size + 1) == -1)  return NULL;
+  ((unsigned char*)decbuf.ptr)[size] = '\0';
 
   // Return back the size of decoded string if demanded.
   if (decsize != NULL) {
     *decsize = size;
   }
 
-  return dec;
+  return (unsigned char*) decbuf.ptr;
 }
