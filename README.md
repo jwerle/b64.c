@@ -6,7 +6,7 @@ Base64 encode/decode
 ## install
 
 ```sh
-$ clib install littlstar/b64.c
+$ clib install jwerle/b64.c
 ```
 
 ## usage
@@ -21,8 +21,9 @@ or
 #include <b64.h>
 ```
 
-```c
+## example
 
+```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
