@@ -10,7 +10,7 @@
 
 typedef struct b64_buffer {
     char * ptr;
-    int bufc;
+    size_t bufc;
 } b64_buffer_t;
 
 /**
