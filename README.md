@@ -1,7 +1,7 @@
 b64.c
 =====
 
-Base64 encode/decode
+> RFC 4648 Compliant Base64 encode/decode implementation
 
 ## install
 
