@@ -26,7 +26,9 @@ typedef struct b64_buffer {
 #endif
 
  // How much memory to allocate per buffer
-#define B64_BUFFER_SIZE		(1024 * 64) // 64K
+#ifndef B64_BUFFER_SIZE
+#  define B64_BUFFER_SIZE		(1024 * 64) // 64K
+#endif
 
  // Start buffered memory
 int b64_buf_malloc(b64_buffer_t * buffer);
